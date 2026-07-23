@@ -1,0 +1,15 @@
+{
+  "name": "My Forever Nails",
+  "short_name": "Forever Nails",
+  "description": "Restorative nail systems for the funeral profession.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FCFBF8",
+  "theme_color": "#FCFBF8",
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

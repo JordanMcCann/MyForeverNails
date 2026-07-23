@@ -1,0 +1,12 @@
+# Normalise line endings: LF in the repository, native in the working copy.
+* text=auto eol=lf
+
+# CNAME must be a bare hostname with a plain LF ending — a stray CR can
+# invalidate the custom-domain binding on GitHub Pages.
+CNAME text eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.ico binary
+*.jpg binary
+*.woff2 binary

@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------
+# Credentials — never commit. (Tokens live in ../.secrets/, which is
+# outside this repository entirely. These rules are a second line of
+# defence in case a credential is ever placed inside the repo.)
+# ---------------------------------------------------------------
+.secrets/
+*.token
+*token*.txt
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------------------------------------------------------------
+# OS / editor cruft
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+# ---------------------------------------------------------------
+# Tooling
+# ---------------------------------------------------------------
+node_modules/
+npm-debug.log*
+.cache/
+_screenshots/
