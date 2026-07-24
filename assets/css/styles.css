@@ -259,14 +259,29 @@ main:focus{outline:none;}
 @media(min-width:900px){.products{grid-template-columns:repeat(3,1fr);}}
 .product{
   background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:clamp(1.75rem,2.6vw,2.25rem);text-align:center;
+  padding:0;text-align:center;overflow:hidden;
   display:flex;flex-direction:column;
   transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
 }
 .product:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--line-gold);}
+
+/* The photographs are trimmed to a white surround, so they sit directly on
+   the white card with no visible plate — only the tray appears to float. */
 .product__visual{
-  display:grid;place-items:center;height:132px;margin-bottom:1.4rem;border-radius:12px;
-  background:radial-gradient(circle at 50% 42%,var(--cream),transparent 72%);
+  padding:clamp(.9rem,1.6vw,1.2rem) 0;
+  border-bottom:1px solid var(--line);
+  background:var(--white);
+  overflow:hidden;
+}
+.product__visual img{
+  width:100%;height:auto;
+  transition:transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.product:hover .product__visual img{transform:scale(1.035);}
+
+.product__body{
+  display:flex;flex-direction:column;flex:1;
+  padding:clamp(1.5rem,2.4vw,1.9rem) clamp(1.75rem,2.6vw,2.25rem) clamp(1.75rem,2.6vw,2.25rem);
 }
 .product__code{font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);}
 .product__name{font-family:var(--serif);font-size:1.7rem;font-weight:600;margin:.35rem 0 .7rem;}
@@ -275,29 +290,16 @@ main:focus{outline:none;}
 .product__price{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--ink);}
 .products__note{text-align:center;margin-top:clamp(2rem,4vw,3rem);font-size:.85rem;letter-spacing:.02em;color:var(--muted);}
 
-/* ---------- Nail visual ---------- */
-.nail{
-  position:relative;display:block;width:52px;height:72px;
-  border-radius:46% 46% 44% 44% / 56% 56% 44% 44%;
-  background:var(--nail-color,#eee);
-  box-shadow:inset 0 3px 7px rgba(255,255,255,.75),inset 0 -8px 14px rgba(0,0,0,.06),0 10px 20px -8px rgba(33,31,27,.28);
-  overflow:hidden;
+/* ---------- Order row swatch ----------
+   A square crop of the same product photograph, used beside each shade in
+   the procurement order builder. */
+.order-row__swatch{
+  width:46px;height:46px;flex:none;
+  border-radius:var(--r);
+  border:1px solid var(--line);
+  object-fit:cover;
+  background:var(--white);
 }
-.nail::after{
-  content:"";position:absolute;top:6%;left:18%;width:26%;height:78%;
-  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,0));
-  border-radius:50%;transform:rotate(8deg);filter:blur(.4px);
-}
-.nail--g01{--nail-color:#F1CDD3;background:linear-gradient(155deg,#FBE6E9,#EEC6CD);}
-.nail--g02{--nail-color:#DDBFA4;background:linear-gradient(155deg,#F0DDCB,#D8BB9F);}
-.nail--g03{--nail-color:#F3D4D9;background:linear-gradient(155deg,#F8DDE1,#EFCAD1);}
-.nail--g03::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:34%;z-index:1;
-  background:linear-gradient(180deg,#FFFFFF,#FBF5F2);
-  border-radius:46% 46% 50% 50% / 90% 90% 30% 30%;
-  box-shadow:0 1px 2px rgba(0,0,0,.05);
-}
-.products .nail{width:60px;height:82px;}
 
 /* ---------- The System ---------- */
 .system__grid{display:grid;gap:clamp(1.75rem,3.5vw,3rem);grid-template-columns:1fr;align-items:start;}
@@ -377,7 +379,6 @@ main:focus{outline:none;}
 }
 .order-row.is-flash{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-tint);background:var(--white);}
 .order-row__info{display:flex;align-items:center;gap:.9rem;min-width:0;}
-.order-row .nail{width:30px;height:42px;flex:none;}
 .order-row__name{font-size:.95rem;font-weight:600;color:var(--ink);line-height:1.2;}
 .order-row__name span{display:block;font-family:var(--sans);font-size:.8rem;font-weight:400;color:var(--muted);letter-spacing:.02em;}
 .order-row__price{font-size:.82rem;color:var(--muted);margin-top:.15rem;}

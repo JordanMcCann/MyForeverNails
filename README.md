@@ -32,6 +32,7 @@ git push
 | `CNAME` | **The custom domain. Do not delete this file** — see below |
 | `sitemap.xml` | List of pages given to search engines |
 | `assets/img/` | Favicons, app icons, and the social share image |
+| `assets/img/products/` | Product photographs — see below |
 
 ### Common changes
 
@@ -49,6 +50,20 @@ the metallic accents; `--paper`, `--cream`, and `--ink` control the base.
 
 **Change the mission statement.** It is the `<blockquote class="mission__quote">`
 in `index.html`.
+
+**Replace a product photograph.** Each shade uses two files in
+`assets/img/products/`:
+
+| File | Used by | Size |
+| --- | --- | --- |
+| `grace-0N.jpg` | The collection card | 1100 × 300 |
+| `grace-0N-thumb.jpg` | The order row in the procurement form | 320 × 320 |
+
+Keep those exact dimensions. The card images are letterboxed onto a **white**
+background so they sit invisibly on the white card — if a replacement has a
+grey or coloured surround, a visible rectangle will appear behind it.
+
+Remember to update the `alt` text in `index.html` if the shade changes.
 
 ---
 
