@@ -70,8 +70,9 @@ Remember to update the `alt` text in `index.html` if the shade changes.
 ## Turning on live form delivery
 
 The procurement form works right now — but until you add a free access key it
-falls back to opening a pre-filled email in the visitor's own mail app rather
-than delivering silently to your inbox. Nothing is lost either way.
+falls back to opening a pre-filled Gmail compose window rather than delivering
+silently to your inbox. Visitors who don't use Gmail get a link to open the
+same message in their own mail app. Nothing is lost either way.
 
 To enable direct delivery to **myforevernails@gmail.com**:
 

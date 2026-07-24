@@ -22,8 +22,9 @@
        4. Paste the key below, then commit and push
 
      Until a key is present the form still works: it opens a
-     pre-filled email addressed to CONTACT_EMAIL containing the
-     complete request, so no enquiry is ever lost.
+     pre-filled Gmail compose window addressed to CONTACT_EMAIL
+     containing the complete request (with a link to fall back to
+     the visitor's own mail app), so no enquiry is ever lost.
      ========================================================== */
   var WEB3FORMS_ACCESS_KEY = '';
   var CONTACT_EMAIL = 'myforevernails@gmail.com';
@@ -223,7 +224,11 @@
     return { lines: lines, totalQty: totalQty, total: total };
   }
 
-  /* Fallback delivery: compose a complete email the director can send. */
+  /* Fallback delivery: compose a complete email the director can send.
+     Gmail's web compose window is opened by default rather than a bare
+     mailto: link, which would hand the request to whatever mail client the
+     operating system happens to own (Outlook on desktop, Mail on iPhone).
+     A mailto: escape hatch is still offered for non-Gmail users. */
   function mailtoFallback(order) {
     var body = [
       'PROCUREMENT REQUEST — MY FOREVER NAILS',
@@ -254,15 +259,28 @@
       'and formal invoicing.'
     ].join('\n');
 
-    var href = 'mailto:' + CONTACT_EMAIL +
-      '?subject=' + encodeURIComponent('Procurement Request — ' + (value('Funeral Home Name') || 'My Forever Nails')) +
-      '&body=' + encodeURIComponent(body);
+    var subject = 'Procurement Request — ' + (value('Funeral Home Name') || 'My Forever Nails');
+    var esc = encodeURIComponent;
 
-    window.location.href = href;
+    var gmailHref = 'https://mail.google.com/mail/?view=cm&fs=1&tf=1' +
+      '&to=' + esc(CONTACT_EMAIL) +
+      '&su=' + esc(subject) +
+      '&body=' + esc(body);
+
+    var mailtoHref = 'mailto:' + CONTACT_EMAIL +
+      '?subject=' + esc(subject) +
+      '&body=' + esc(body);
+
+    /* Opened in a new tab so the completed form stays behind it. The submit
+       event is a user gesture, so this is not treated as a pop-up; if a
+       blocker intervenes anyway, navigate the current tab instead. */
+    var win = window.open(gmailHref, '_blank', 'noopener');
+    if (!win) { window.location.href = gmailHref; }
 
     setStatus(
-      'Your request has been prepared in your email application — please press <strong>send</strong> to complete it. ' +
-      'If nothing opened, email <a href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a> directly.',
+      'Your request has been prepared in Gmail — please press <strong>send</strong> to complete it. ' +
+      'Not a Gmail user? <a href="' + mailtoHref.replace(/&/g, '&amp;') + '">Open it in your usual email app</a> ' +
+      'instead, or email <a href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a> directly.',
       'info'
     );
   }
