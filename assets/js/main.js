@@ -13,20 +13,21 @@
 
      WEB3FORMS_ACCESS_KEY
      --------------------
-     Paste your free Web3Forms access key between the quotes to
-     turn on live form delivery to myforevernails@gmail.com.
+     Delivers form submissions straight to myforevernails@gmail.com.
+     The key is public by design and safe to commit. To deliver to
+     a different address, create a key for it and replace this one:
 
        1. Visit https://web3forms.com
-       2. Enter myforevernails@gmail.com and press "Create Access Key"
-       3. Confirm the email they send you
+       2. Enter the address and press "Create Access Key"
+       3. Copy the key from the email they send to that address
        4. Paste the key below, then commit and push
 
-     Until a key is present the form still works: it opens a
-     pre-filled Gmail compose window addressed to CONTACT_EMAIL
-     containing the complete request (with a link to fall back to
-     the visitor's own mail app), so no enquiry is ever lost.
+     Never leave it blank: without a key the form falls back to
+     opening a pre-filled Gmail compose window addressed to
+     CONTACT_EMAIL, which makes visitors sign in to Google and
+     press send themselves.
      ========================================================== */
-  var WEB3FORMS_ACCESS_KEY = '';
+  var WEB3FORMS_ACCESS_KEY = 'f3a1ee25-1ac1-40c1-8552-e7b82463e53f';
   var CONTACT_EMAIL = 'myforevernails@gmail.com';
 
   /* Shade catalogue — prices in whole US dollars. */
@@ -207,6 +208,12 @@
     return el ? String(el.value || '').trim() : '';
   }
 
+  /* Names the funeral home, so each request stands apart in the inbox
+     rather than every one arriving under an identical subject line. */
+  function requestSubject() {
+    return 'Procurement Request — ' + (value('Funeral Home Name') || 'My Forever Nails');
+  }
+
   /* Builds the order lines and totals shared by both delivery paths. */
   function buildOrder() {
     var lines = [];
@@ -259,7 +266,7 @@
       'and formal invoicing.'
     ].join('\n');
 
-    var subject = 'Procurement Request — ' + (value('Funeral Home Name') || 'My Forever Nails');
+    var subject = requestSubject();
     var esc = encodeURIComponent;
 
     var gmailHref = 'https://mail.google.com/mail/?view=cm&fs=1&tf=1' +
@@ -300,9 +307,11 @@
       }
 
       /* Populate the hidden summary fields carried in the notification email. */
+      var subjField = form.querySelector('input[name="subject"]');
       var sumField = form.querySelector('input[name="Order Summary"]');
       var totField = form.querySelector('input[name="Estimated Subtotal"]');
       var keyField = form.querySelector('input[name="access_key"]');
+      if (subjField) subjField.value = requestSubject();
       if (sumField) sumField.value = order.lines.join('\n');
       if (totField) totField.value = '$' + order.total + ' (estimate — formal invoice to follow)';
 

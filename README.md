@@ -67,32 +67,30 @@ Remember to update the `alt` text in `index.html` if the shade changes.
 
 ---
 
-## Turning on live form delivery
+## Form delivery
 
-The procurement form works right now — but until you add a free access key it
-falls back to opening a pre-filled Gmail compose window rather than delivering
-silently to your inbox. Visitors who don't use Gmail get a link to open the
-same message in their own mail app. Nothing is lost either way.
+Procurement requests are delivered straight to **myforevernails@gmail.com** by
+[Web3Forms](https://web3forms.com). Every submission arrives as its own email,
+with the funeral home in the subject line, containing the director details,
+license number, the itemised order, shipping address, and any notes. The
+director's email is set as the reply-to, so pressing **Reply** answers them.
 
-To enable direct delivery to **myforevernails@gmail.com**:
+The access key is the first line of the config block in `assets/js/main.js`:
 
-1. Go to <https://web3forms.com>
-2. Enter `myforevernails@gmail.com` and press **Create Access Key**
-3. Confirm the email they send you — they reply with a key (a UUID)
-4. Open `assets/js/main.js` and paste it into the first line of the config block:
+```js
+var WEB3FORMS_ACCESS_KEY = '…';
+```
 
-   ```js
-   var WEB3FORMS_ACCESS_KEY = 'paste-your-key-here';
-   ```
+The key is **safe to commit** — Web3Forms access keys are designed to be public
+and client-side; they only allow sending mail to the address that owns the key.
 
-5. Commit and push.
-
-The free tier covers 250 submissions per month. The key is **safe to commit** —
-Web3Forms access keys are designed to be public and client-side; they only allow
-sending mail to the address that owns the key.
-
-Every submission arrives as an email containing the funeral home, director
-details, license number, the itemised order, shipping address, and any notes.
+- **To change the receiving address,** create a new key at
+  <https://web3forms.com> for the new address and replace this one.
+- **If notifications land in Spam or Promotions,** mark one *Not spam* and add
+  `notify@web3forms.com` to contacts.
+- **Never leave the key blank.** Without it the form falls back to opening a
+  pre-filled Gmail compose window, which asks visitors to sign in to Google and
+  press send themselves — anyone without Gmail cannot get a request through.
 
 ---
 
